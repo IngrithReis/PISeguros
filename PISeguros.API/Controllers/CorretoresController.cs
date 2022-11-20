@@ -12,7 +12,7 @@ namespace PISeguros.API.Controllers
 {
     [ApiController]
     [Route("v1/[controller]")]
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class CorretoresController : ControllerBase
     {
         private readonly AppDbContext _appDbContext;
@@ -31,13 +31,14 @@ namespace PISeguros.API.Controllers
         {
             var corretores = await _appDbContext.Corretores.ToListAsync();
 
-            return new  BaseResponse<List<CorretorDTO>>(corretores.Select(x => new CorretorDTO
-            {
-                Id = x.Id,
-                Nome = x.Nome,
-                Telefone = x.Telefone,
-                Corretagem = x.Corretagem
-            }).ToList());
+            return Ok(new  BaseResponse<List<CorretorDTO>>(corretores.Select(x => new CorretorDTO
+                {
+                    Id = x.Id,
+                    Nome = x.Nome,
+                    Telefone = x.Telefone,
+                    Corretagem = x.Corretagem
+                }).ToList())
+            );
         }
 
         [HttpPost]

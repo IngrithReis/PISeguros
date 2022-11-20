@@ -10,6 +10,7 @@ namespace PISeguros.API.Database
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Corretor> Corretores { get; set; }
+        public DbSet<Seguro> Seguros { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
