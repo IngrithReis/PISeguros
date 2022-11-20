@@ -32,6 +32,7 @@ namespace PISeguros.API.Controllers
                 VidasMinimas = x.VidasMinimas,
                 MaxDependentes = x.MaxDependentes,
                 ValorVida = x.ValorVida,
+                IdadeMaximaSegurado = x.IdadeMaximaSegurado,
             }).ToList())
             );
         }
@@ -54,6 +55,7 @@ namespace PISeguros.API.Controllers
                 VidasMinimas = seguro.VidasMinimas,
                 MaxDependentes = seguro.MaxDependentes,
                 ValorVida = seguro.ValorVida,
+                IdadeMaximaSegurado = seguro.IdadeMaximaSegurado,
             });
         }
 
@@ -67,6 +69,7 @@ namespace PISeguros.API.Controllers
                 VidasMinimas = seguroDTO.VidasMinimas,
                 ValorVida = seguroDTO.ValorVida,
                 MaxDependentes = seguroDTO.MaxDependentes,
+                IdadeMaximaSegurado =seguroDTO.IdadeMaximaSegurado
             };
 
             await _appDbContext.Seguros.AddAsync(seguro);
@@ -89,9 +92,27 @@ namespace PISeguros.API.Controllers
             seguro.VidasMinimas = seguroDTO.VidasMinimas;
             seguro.MaxDependentes = seguroDTO.MaxDependentes;
             seguro.ValorVida = seguroDTO.ValorVida;
+            seguro.IdadeMaximaSegurado = seguroDTO.IdadeMaximaSegurado;
 
             await _appDbContext.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var seguro = await _appDbContext.Seguros.FirstOrDefaultAsync(x => x.Id == id);
+            if (seguro == null)
+            {
+                return BadRequest(new ErroResponse("Seguro não localizado"));
+            }
+
+             _appDbContext.Seguros.Remove(seguro);
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok(seguro);
+
         }
     }
 }

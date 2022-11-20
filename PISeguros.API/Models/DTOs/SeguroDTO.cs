@@ -11,5 +11,6 @@ namespace PISeguros.API.Models.DTOs
         public int VidasMinimas { get; set; }
         public int MaxDependentes { get; set; }
         public decimal ValorVida { get; set; }
+        public int IdadeMaximaSegurado { get; set; }
     }
 }

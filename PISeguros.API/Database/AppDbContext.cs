@@ -11,6 +11,10 @@ namespace PISeguros.API.Database
 
         public DbSet<Corretor> Corretores { get; set; }
         public DbSet<Seguro> Seguros { get; set; }
+        public DbSet<Proponente> Proponentes { get; set; }
+        public DbSet<Segurado> Segurados { get; set; }
+        public DbSet<Dependente> Dependentes { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

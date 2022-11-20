@@ -9,7 +9,6 @@ namespace PISeguros.API.Models.Entities
 
         [Required, MaxLength(255)]
         public string Nome { get; set; }
-
         public string Telefone { get; set; }
         public decimal Corretagem { get; set; }
     }
