@@ -7,6 +7,8 @@ namespace PISeguros.API.Models.DTOs
     {
         public int Id { get; set; }
 
+        public int ProponenteId { get; set; }
+
         [Required, MaxLength(100)]
         public string Nome { get; set; }
 

@@ -13,7 +13,7 @@ namespace PISeguros.API.Models.Requests
 
         [Required, MaxLength]
         public string Email { get; set; }
-
+        public int? SeguroId { get; set; }
         public List<SeguradoDTO> Segurados { get; set; }
     }
 }

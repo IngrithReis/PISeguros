@@ -34,7 +34,9 @@ namespace PISeguros.API.Controllers
                 Id = x.Id,
                 Nome = x.Nome,
                 CNPJ = x.CNPJ,
-                Email = x.Email         
+                Email = x.Email,
+                SeguroId = x.SeguroId,
+                
             }).ToList())
            );
         }
@@ -59,6 +61,7 @@ namespace PISeguros.API.Controllers
                 Nome = proponente.Nome,
                 CNPJ = proponente.CNPJ,
                 Email = proponente.Email,
+                SeguroId = proponente.SeguroId,
                 Segurados = proponente.Segurados.Select(x => new SeguradoDTO
                 {   
                     Id = x.Id,
@@ -85,6 +88,8 @@ namespace PISeguros.API.Controllers
                 Nome = proponenteDTO.Nome,
                 CNPJ = proponenteDTO.CNPJ,
                 Email = proponenteDTO.Email,
+                SeguroId = proponenteDTO.SeguroId,
+
                 Segurados = proponenteDTO.Segurados.Select(x => new Segurado
                 {
                     Nome = x.Nome,
@@ -105,12 +110,17 @@ namespace PISeguros.API.Controllers
             await _appDbContext.SaveChangesAsync();
             return Ok();
         }
-        [HttpPut]
+
+        [HttpPut("{id}")]
         [Authorize(Roles = "admin,corretor")]
         public async Task<ActionResult> Put(ProponenteDTO proponenteDTO)
         {
-            var proponente = await _appDbContext.Proponentes.FirstOrDefaultAsync(x => x.Id == proponenteDTO.Id);
-            if(proponente == null)
+            var proponente = await _appDbContext.Proponentes
+                .Include(x => x.Segurados)
+                .ThenInclude(x => x.Dependentes)
+                .FirstOrDefaultAsync(x => x.Id == proponenteDTO.Id);
+
+            if (proponente == null)
             {
                 return NotFound();
             }
@@ -118,14 +128,15 @@ namespace PISeguros.API.Controllers
             proponente.Nome = proponenteDTO.Nome;
             proponente.CNPJ = proponenteDTO.CNPJ;
             proponente.Email = proponenteDTO.Email;
-            
             await _appDbContext.SaveChangesAsync();
-
             return Ok();
         }
         
-
+            
     }
+        
+
+}
 
     
-}
+

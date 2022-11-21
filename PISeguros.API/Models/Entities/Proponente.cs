@@ -13,6 +13,7 @@ namespace PISeguros.API.Models.Entities
         [Required, MaxLength(14)]
         public string CNPJ { get; set; }
         public string Email { get; set; }
+        public int? SeguroId { get; set; }
         public List<Segurado> Segurados { get; set; }
 
     }

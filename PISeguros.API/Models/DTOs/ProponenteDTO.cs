@@ -12,7 +12,7 @@ namespace PISeguros.API.Models.DTOs
         [Required]
         public string CNPJ { get; set; }
         public string Email { get; set; }
-
+        public int? SeguroId { get; set; }
         public List<SeguradoDTO> Segurados { get; set; }
     }
 }

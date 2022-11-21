@@ -83,6 +83,7 @@ namespace PISeguros.API.Controllers
         public async Task<ActionResult> Post(SeguroDTO seguroDTO)
         {
             var seguro = await _appDbContext.Seguros.FirstOrDefaultAsync(x => x.Id == seguroDTO.Id);
+           
             if (seguro == null)
             {
                 return BadRequest(new ErroResponse("Seguro não localizado"));
